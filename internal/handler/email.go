@@ -21,9 +21,17 @@ func SendEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// go func() {
+	// 	err := service.SendEmail(req)
+	// 	if err != nil {
+	// 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
+	// 		return
+	// 	}
+	// }()
+
 	err := service.SendEmail(req)
 	if err != nil {
-		http.Error(w, "Failed to send email: "+err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
 	}
 

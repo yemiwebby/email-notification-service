@@ -5,10 +5,12 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/yemiwebby/email-notification-service/config"
 	"github.com/yemiwebby/email-notification-service/internal/handler"
 )
 
 func main() {
+	config.LoadConfig()
 	r := mux.NewRouter()
 
 	handler.RegisterEmailRoutes(r)
