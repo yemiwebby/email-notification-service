@@ -14,7 +14,23 @@ spec:
     spec:
       containers:
         - name: email-service
-          image: gcr.io/<your-project-id>/email-service:latest
+          image: gcr.io/gdg-microservices-project/email-service:latest
+          env:
+            - name: MAILGUN_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: mailgun-secret
+                  key: MAILGUN_DOMAIN
+            - name: MAILGUN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mailgun-secret
+                  key: MAILGUN_API_KEY
+            - name: MAILGUN_SENDER
+              valueFrom:
+                secretKeyRef:
+                  name: mailgun-secret
+                  key: MAILGUN_SENDER
           ports:
             - containerPort: 8081
 ---

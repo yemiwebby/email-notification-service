@@ -1,7 +1,12 @@
 package service
 
 import (
+	"context"
 	"log"
+	"os"
+	"time"
+
+	"github.com/mailgun/mailgun-go/v4"
 )
 
 // EmailRequest represents the payload for sending an email
@@ -13,31 +18,31 @@ type EmailRequest struct {
 
 // SendEmail sends an email using Mailgun
 func SendEmail(req EmailRequest) error {
-	// log.Printf("Processing email for: %s\n", req.Recipient)
+	log.Printf("Processing email for: %s\n", req.Recipient)
 
-	// domain := os.Getenv("MAILGUN_DOMAIN")
-	// apiKey := os.Getenv("MAILGUN_API_KEY")
-	// sender := os.Getenv("MAILGUN_SENDER")
+	domain := os.Getenv("MAILGUN_DOMAIN")
+	apiKey := os.Getenv("MAILGUN_API_KEY")
+	sender := os.Getenv("MAILGUN_SENDER")
 
 	
 
-	// mg := mailgun.NewMailgun(domain, apiKey)
-	// message := mailgun.NewMessage(sender, req.Subject, req.Body, req.Recipient)
+	mg := mailgun.NewMailgun(domain, apiKey)
+	message := mailgun.NewMessage(sender, req.Subject, req.Body, req.Recipient)
 
-	// ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	// defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 
-	// _, id, err := mg.Send(ctx, message)
-	// if err != nil {
-	// 	log.Printf("Failed to send email to %s: %v\n", req.Recipient, err)
-	// 	return err
-	// }
+	_, id, err := mg.Send(ctx, message)
+	if err != nil {
+		log.Printf("Failed to send email to %s: %v\n", req.Recipient, err)
+		return err
+	}
 
-	// log.Printf("Email sent to %s. ID: %s\n", req.Recipient, id)
-	// return nil
+	log.Printf("Email sent to %s. ID: %s\n", req.Recipient, id)
+	return nil
 
 	// Email response with multiple users
 
-	log.Printf("Simulated email sent to %s with subject: %s\n", req.Recipient, req.Subject)
-	return nil
+	// log.Printf("Simulated email sent to %s with subject: %s\n", req.Recipient, req.Subject)
+	// return nil
 }
