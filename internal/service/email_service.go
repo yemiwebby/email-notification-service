@@ -20,6 +20,12 @@ type EmailRequest struct {
 func SendEmail(req EmailRequest) error {
 	log.Printf("Processing email for: %s\n", req.Recipient)
 
+	simulationMode := os.Getenv("EMAIL_SIMULATION_MODE")
+	if simulationMode == "true" {
+		log.Printf("[SIMULATION] Email sent to %s with subject: %s\n", req.Recipient, req.Subject)
+		return nil
+	}
+
 	domain := os.Getenv("MAILGUN_DOMAIN")
 	apiKey := os.Getenv("MAILGUN_API_KEY")
 	sender := os.Getenv("MAILGUN_SENDER")
@@ -40,9 +46,4 @@ func SendEmail(req EmailRequest) error {
 
 	log.Printf("Email sent to %s. ID: %s\n", req.Recipient, id)
 	return nil
-
-	// Email response with multiple users
-
-	// log.Printf("Simulated email sent to %s with subject: %s\n", req.Recipient, req.Subject)
-	// return nil
 }

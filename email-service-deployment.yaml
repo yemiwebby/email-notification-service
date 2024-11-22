@@ -31,6 +31,8 @@ spec:
                 secretKeyRef:
                   name: mailgun-secret
                   key: MAILGUN_SENDER
+            - name: EMAIL_SIMULATION_MODE
+              value: "false"
           ports:
             - containerPort: 8081
 ---
